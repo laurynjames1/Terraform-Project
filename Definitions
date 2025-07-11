@@ -1,0 +1,100 @@
+# The purpose of providers.tf in a Terraform project is to define the cloud providers and set up their configurations, such as credentials, region, and required versions. It tells Terraform which services you'll be interacting with and how to authenticate.
+
+# KEY FUNCTIONS-----
+# 1. Declare the provider (Specifies which provider (e.g., azurerm, aws, google) Terraform will use.)
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
+  }
+}
+# 2. Configure the provider (Sets details like region, subscription ID, or authentication method.)
+provider "azurerm" {
+  features = {}
+  subscription_id = "your-subscription-id"
+}
+# 3.Version Control (Ensures compatibility by locking the provider to a specific version or range)
+# Benefits:
+Keeps provider-related settings organized and separate from your resource definitions.
+Makes your codebase more modular and reusable.
+Helps avoid version conflicts during collaboration or deployment.
+
+# The purpose of ssh.tf in a Terraform project is to define and configure SSH access to virtual machines or compute instances—usually in cloud environments like Azure, AWS, or GCP.
+
+# 1. Define SSH Key Pair (It can generate or reference an existing SSH key pair used to securely access virtual machines.)
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+# 2. Output or Store Public Key (The public key is typically injected into the VM configuration so you can SSH into it.)
+resource "azurerm_linux_virtual_machine" "example" {
+  name                = "my-vm"
+  ...
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = tls_private_key.example.public_key_openssh
+  }
+}
+# 3. Enable Secure Access (Ensures that only users with the matching private key can log into the machine—no password login needed.)
+# Why Use a Separate ssh.tf File?
+Keeps your SSH-related configuration modular and organized.
+Makes it easier to reuse key logic across multiple projects or resources.
+Separates security-sensitive access setup from general infrastructure logic.
+
+# The main.tf is the Central Hub for Infrastructure Code it typically includes the definitions for cloud resources like virtual machines, networks, subnets, storage accounts, and more.
+
+# 1. Resource Definitions (Specifies the infrastructure components you want Terraform to manage.)
+resource "azurerm_resource_group" "example" {
+  name     = "myResourceGroup"
+  location = "East US"
+}
+
+resource "azurerm_virtual_network" "vnet" {
+  name                = "myVNet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+# 2. Data Sources (optional) (Pull in external information (e.g., an existing resource).)
+data "azurerm_client_config" "current" {}
+# 3. Dependencies and References (Connect different resources using variables and outputs.)
+# Why Separate main.tf from Other Files?
+Keeps resource definitions focused and readable.
+Encourages modular design when combined with variables.tf, outputs.tf, providers.tf, and ssh.tf.
+
+# The variables.tf file in a Terraform project is used to declare input variables that allow you to parameterize your configuration, making it more flexible, reusable, and easier to manage across different environments.
+
+# Purpose of variables.tf:
+Defines all input variables your Terraform modules or configuration files will use.
+Helps separate configuration logic from environment-specific values.
+Supports cleaner and DRY (Don’t Repeat Yourself) Terraform code.
+
+variable "resource_group_name" {
+  description = "The name of the Azure Resource Group"
+  type        = string
+  default     = "my-resource-group"
+}
+
+variable "location" {
+  description = "Azure region where resources will be created"
+  type        = string
+  default     = "East US"
+}
+
+variable "vm_admin_username" {
+  description = "Admin username for the virtual machine"
+  type        = string
+}
+
+variable "vm_size" {
+  description = "The size of the virtual machine"
+  type        = string
+  default     = "Standard_B1s"
+}
+
+# Benefits:
+Promotes modularity and reuse across different projects or environments.
+Makes it easier to pass different values via terraform.tfvars, environment variables, or the CLI.
+Improves readability by centralizing variable definitions in one place.

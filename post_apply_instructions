@@ -1,0 +1,41 @@
+# COMMANDS SHOUND BE RUN CONSECUTIVELY
+
+# Initialize Terraform
+
+terraform init -upgrade
+
+# Execute terraform init to initialize the Terraform deployment. This command downloads the Azure provider needed to manage your Azure resources.
+# The -upgrade flag updates the provider plugins to the latest versions that meet the version constraints defined in your configuration.
+
+
+# Create Terraform execution plan
+
+terraform plan -out main.tfplan
+
+# Run terraform apply to execute the changes defined in your execution plan and deploy them to your cloud infrastructure.
+# This example assumes you previously ran terraform plan -out main.tfplan.
+# If you used a different filename with the -out option, make sure to reference that same file when running terraform apply.
+# If you did not use the -out flag, simply run terraform apply without any additional arguments.
+
+# Apply Terraform execution plan
+
+terraform apply #create resources
+
+# Run terraform apply to execute the changes defined in your execution plan and deploy them to your cloud infrastructure.
+# This example assumes you previously ran terraform plan -out main.tfplan.
+# If you used a different filename with the -out option, make sure to reference that same file when running terraform apply.
+# If you did not use the -out flag, simply run terraform apply without any additional arguments.
+
+# Destroy existing resources in Terraform 
+
+terraform destroy #remove infrastructure
+
+# Run terraform plan with the -destroy flag to generate a plan for tearing down your infrastructure.
+# The terraform plan command produces an execution plan without applying any changes. When used with the -destroy flag, it shows what resources will be removed based on your current configuration.
+# This approach lets you confirm the destruction plan before making any actual changes.
+# You can optionally include the -out flag to save the destroy plan to a file. This guarantees that the exact plan you reviewed will be used during execution.
+
+
+# Execute terraform apply to implement the execution plan.
+
+terraform apply main.destroy.tfplan
