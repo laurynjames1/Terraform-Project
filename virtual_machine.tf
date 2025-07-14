@@ -5,7 +5,7 @@ resource "azurerm_linux_virtual_machine" "example-vm-name" {
   location              = azurerm_resource_group.ltc-rg.location
   resource_group_name   = azurerm_resource_group.ltc-rg.name
   network_interface_ids = [azurerm_network_interface.ltc-NIC.id]
-  size                  = "Standard_DS1"
+  size                  = "Standard_D1s"
   }
   
   os_disk {
