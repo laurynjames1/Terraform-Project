@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "ltc-vn" {
   address_space       = ["10.30.0.0/16"]
 
   tags = {
-    environment = "dev"
+    environment = "example-tag"
   }
 }
 
@@ -25,7 +25,7 @@ resource "azurerm_network_security_group" "ltc-nsg" {
   resource_group_name = azurerm_resource_group.ltc-rg.name
 
   tags = {
-    environment = "dev"
+    environment = "example-tag"
   }
 }
 
