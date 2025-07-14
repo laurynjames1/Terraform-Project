@@ -1,3 +1,8 @@
+# Sets values Terraform will use during terraform plan/apply.
+# Keeps input configuration clean and separate from code.
+
+# Examples:
+
 variable "resource_group_location" {
   type        = string
   default     = "eastus"
