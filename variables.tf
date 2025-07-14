@@ -3,6 +3,11 @@
 
 # Example:
 
+varaibale "subscription_id" {
+  type        = string
+  description = "Azure tenant id for auth"
+}
+
 variable "admin_username" {
   type        = string
   description = "Admin username for the virtual machine"
