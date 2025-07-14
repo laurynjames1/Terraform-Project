@@ -1,7 +1,7 @@
 # Defines what variables your Terraform project expects.
 # Sets types, descriptions, and optional default values.
 
-# Example:
+# Examples:
 
 varaibale "subscription_id" {
   type        = string
