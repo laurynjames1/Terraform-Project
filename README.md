@@ -12,7 +12,7 @@ This Terraform project provisions a secure, Linux-based virtual infrastructure o
 - **Storage Account for boot diagnostics**
 - **Azure Log Analytics Workspace**
 - **Azure Sentinel onboarding**
-- **OMS Agent extension for monitoring**
+- **AMA extension for monitoring (installed via Azure GUI)**
 
 This deployment is intended for development, testing, or demonstration purposes and should be customized for production environments.
 
@@ -31,7 +31,7 @@ This deployment is intended for development, testing, or demonstration purposes 
 | `azurerm_storage_account`        | Storage account for boot diagnostics          |
 | `azurerm_log_analytics_workspace`| Log Analytics Workspace for Azure Sentinel    |
 | `azurerm_sentinel_log_analytics_workspace_onboarding` | Onboards Log Analytics to Azure Sentinel |
-| `azurerm_virtual_machine_extension` | Installs OMS Agent for monitoring           |
+
 
 ---
 
@@ -47,7 +47,6 @@ This deployment is intended for development, testing, or demonstration purposes 
 - main.tf # Main Terraform configuration
 - variables.tf # Input variables definition
 - terraform.tfvars.example # Example variable values (DO NOT COMMIT real values)
-- outputs.tf # Outputs (optional)
 - README.md # This file
 
 ---
@@ -55,7 +54,7 @@ This deployment is intended for development, testing, or demonstration purposes 
 ## Notes
 - The VM uses SSH key authentication only
 - Storage account names must be globally unique — this is handled by appending a random string
-- Sentinel is connected to the Log Analytics workspace and the OMS agent is configured for monitoring
+- Sentinel is connected to the Log Analytics workspace and the AMA agent is configured for monitoring
 - Make sure the workspace_key is securely managed and never hardcoded into source control
 
 ---
